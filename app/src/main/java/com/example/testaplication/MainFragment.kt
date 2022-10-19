@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment
 import java.sql.Time
 import java.util.*
 
-class MainFragment : Fragment(), TimePickerFragment.Callbacks, DatePickerFragment.Callbacks {
+class MainFragment : Fragment(), FromTimePickerFragment.Callbacks, ToTimePickerFragment.Callbacks,
+    TestTimePickerFragment.Callbacks, FromDatePickerFragment.Callbacks,
+    ToDatePickerFragment.Callbacks, TestDatePickerFragment.Callbacks {
     private lateinit var dateFrom: Date
     private lateinit var timeFrom: Time
     private lateinit var dateTo: Date
@@ -47,31 +49,33 @@ class MainFragment : Fragment(), TimePickerFragment.Callbacks, DatePickerFragmen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         buttonFromDate.setOnClickListener {
-            DatePickerFragment.newInstance().apply {
+            FromDatePickerFragment.newInstance().apply {
                 setTargetFragment(this@MainFragment, 0)
-                show(this@MainFragment.requireFragmentManager(), "DateFragment")
+                show(this@MainFragment.requireFragmentManager(), "FromDateFragment")
             }
-            TimePickerFragment.newInstance().apply {
+            FromTimePickerFragment.newInstance().apply {
                 setTargetFragment(this@MainFragment, 1)
-                show(this@MainFragment.requireFragmentManager(), "TimeFragment")
+                show(this@MainFragment.requireFragmentManager(), "FromTimeFragment")
             }
         }
         buttonToDate.setOnClickListener {
-            DatePickerFragment.newInstance().apply {
+            ToDatePickerFragment.newInstance().apply {
                 setTargetFragment(this@MainFragment, 2)
-                show(this@MainFragment.requireFragmentManager(), "DateFragment")
+                show(this@MainFragment.requireFragmentManager(), "ToDateFragment")
             }
-            TimePickerFragment.newInstance().apply {
-                show(this@MainFragment.requireFragmentManager(), "TimeFragment")
+            ToTimePickerFragment.newInstance().apply {
+                setTargetFragment(this@MainFragment, 3)
+                show(this@MainFragment.requireFragmentManager(), "ToTimeFragment")
             }
         }
         buttonTestDate.setOnClickListener {
-            DatePickerFragment.newInstance().apply {
-                setTargetFragment(this@MainFragment, 3)
-                show(this@MainFragment.requireFragmentManager(), "DateFragment")
+            TestDatePickerFragment.newInstance().apply {
+                setTargetFragment(this@MainFragment, 4)
+                show(this@MainFragment.requireFragmentManager(), "TestDateFragment")
             }
-            TimePickerFragment.newInstance().apply {
-                show(this@MainFragment.requireFragmentManager(), "TimeFragment")
+            TestTimePickerFragment.newInstance().apply {
+                setTargetFragment(this@MainFragment, 5)
+                show(this@MainFragment.requireFragmentManager(), "TestTimeFragment")
             }
         }
         view.findViewById<Button>(R.id.button_check).setOnClickListener {

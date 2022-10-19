@@ -7,7 +7,7 @@ import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import java.util.*
 
-class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
+class FromDatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
     interface Callbacks {
         fun onDataFromSelected(data: Date)
         fun onDataToSelected(data: Date)
@@ -31,19 +31,19 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
     override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
         val resultData = Date(p1, p2, p3)
         targetFragment?.let {
-            (it as DatePickerFragment.Callbacks).onDataFromSelected(resultData)
+            (it as FromDatePickerFragment.Callbacks).onDataFromSelected(resultData)
         }
         targetFragment?.let {
-            (it as DatePickerFragment.Callbacks).onDataToSelected(resultData)
+            (it as FromDatePickerFragment.Callbacks).onDataToSelected(resultData)
         }
         targetFragment?.let {
-            (it as DatePickerFragment.Callbacks).onDataTestSelected(resultData)
+            (it as FromDatePickerFragment.Callbacks).onDataTestSelected(resultData)
         }
     }
 
     companion object {
-        fun newInstance(): DatePickerFragment {
-            return DatePickerFragment()
+        fun newInstance(): FromDatePickerFragment {
+            return FromDatePickerFragment()
         }
     }
 }
