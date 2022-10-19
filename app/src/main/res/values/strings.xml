@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TestApplication</string>
+    <string name="from">От</string>
+    <string name="to">До</string>
+    <string name="result">Результат: </string>
+    <string name="test">Тестируемая дата: </string>
+    <string name="time">Время</string>
+    <string name="date">Дата</string>
+    <string name="check">Проверить</string>
+</resources>
