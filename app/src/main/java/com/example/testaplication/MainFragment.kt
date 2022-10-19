@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import java.sql.Time
 import java.util.*
 
-class MainFragment : Fragment(), TimePickerFragment.Callbacks {
+class MainFragment : Fragment(), TimePickerFragment.Callbacks, DatePickerFragment.Callbacks {
     private lateinit var dateFrom: Date
     private lateinit var timeFrom: Time
     private lateinit var dateTo: Date
@@ -19,6 +18,9 @@ class MainFragment : Fragment(), TimePickerFragment.Callbacks {
     private lateinit var dateTest: Date
     private lateinit var timeTest: Time
     private lateinit var resultTextView: TextView
+    private lateinit var buttonFromDate: Button
+    private lateinit var buttonToDate: Button
+    private lateinit var buttonTestDate: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,11 +28,14 @@ class MainFragment : Fragment(), TimePickerFragment.Callbacks {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.main_fragment, container, false)
+        buttonFromDate = view.findViewById<Button>(R.id.button_from_data)
+        buttonToDate = view.findViewById<Button>(R.id.button_to_data)
+        buttonTestDate = view.findViewById<Button>(R.id.button_test_data)
         return view
     }
 
     private fun dateInRange(from: Long, to: Long, test: Long): Int {
-        if (from > to) {
+        if (from >= to) {
             return 2
         }
         if (test in from..to) {
@@ -41,6 +46,34 @@ class MainFragment : Fragment(), TimePickerFragment.Callbacks {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        buttonFromDate.setOnClickListener {
+            DatePickerFragment.newInstance().apply {
+                setTargetFragment(this@MainFragment, 0)
+                show(this@MainFragment.requireFragmentManager(), "DateFragment")
+            }
+            TimePickerFragment.newInstance().apply {
+                setTargetFragment(this@MainFragment, 1)
+                show(this@MainFragment.requireFragmentManager(), "TimeFragment")
+            }
+        }
+        buttonToDate.setOnClickListener {
+            DatePickerFragment.newInstance().apply {
+                setTargetFragment(this@MainFragment, 2)
+                show(this@MainFragment.requireFragmentManager(), "DateFragment")
+            }
+            TimePickerFragment.newInstance().apply {
+                show(this@MainFragment.requireFragmentManager(), "TimeFragment")
+            }
+        }
+        buttonTestDate.setOnClickListener {
+            DatePickerFragment.newInstance().apply {
+                setTargetFragment(this@MainFragment, 3)
+                show(this@MainFragment.requireFragmentManager(), "DateFragment")
+            }
+            TimePickerFragment.newInstance().apply {
+                show(this@MainFragment.requireFragmentManager(), "TimeFragment")
+            }
+        }
         view.findViewById<Button>(R.id.button_check).setOnClickListener {
             resultTextView = view.findViewById<TextView>(R.id.textResult)
             val from = dateFrom.time + timeFrom.time
@@ -64,6 +97,18 @@ class MainFragment : Fragment(), TimePickerFragment.Callbacks {
 
     override fun onTimeTestSelected(time: Time) {
         timeTest = time
+    }
+
+    override fun onDataFromSelected(data: Date) {
+        dateFrom = data
+    }
+
+    override fun onDataToSelected(data: Date) {
+        dateTo = data
+    }
+
+    override fun onDataTestSelected(data: Date) {
+        dateTest = data
     }
 
 }

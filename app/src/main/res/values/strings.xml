@@ -7,4 +7,5 @@
     <string name="time">Время</string>
     <string name="date">Дата</string>
     <string name="check">Проверить</string>
+    <string name="set_data">Выбрать дату и время</string>
 </resources>
